@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ServiceImpl } from '../services/serviceImpl';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-cree-projet',
@@ -10,6 +12,10 @@ export class CreeProjetComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
+  onSubmit(form: NgForm) {
+    console.log(form.value);
+  }
 }
