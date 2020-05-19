@@ -1,6 +1,6 @@
 export class Task{
   name:string;
   start:Date;
-  duration;Date;
+  duration:Date;
   running:boolean;
 }
