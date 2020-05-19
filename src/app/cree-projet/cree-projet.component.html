@@ -1,1 +1,15 @@
-<p>cree-projet works!</p>
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div class="form-group">
+        <label for="name">Nom de du projet</label>
+        <input type="text"
+               id="name"
+               name="name"
+               ngModel
+               class="form-control">
+      </div>
+      <button class="btn btn-primary" type="submit">Enregistrer</button>
+    </form>
+  </div>
+</div>
