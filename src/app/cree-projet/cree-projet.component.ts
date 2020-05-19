@@ -1,3 +1,4 @@
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ServiceImpl } from '../services/serviceImpl';
 import { NgForm } from '@angular/forms';
@@ -9,7 +10,8 @@ import { NgForm } from '@angular/forms';
 })
 export class CreeProjetComponent implements OnInit {
 
-  constructor() { }
+  constructor(private services: ServiceImpl,
+              private router: Router) { }
 
   ngOnInit(): void {
 
@@ -17,5 +19,8 @@ export class CreeProjetComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     console.log(form.value);
+
+    //On renvoi l'utilisateur sur le menu principal
+    this.router.navigate([''])
   }
 }
