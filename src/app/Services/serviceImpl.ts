@@ -1,7 +1,7 @@
 import { Task } from "../Modele/Task";
 import { Project } from "../Modele/Project"
 
-export class ServiceImpl{
+export class ServiceImpl {
 
   taches: Task[] = [
     {name: 'Aller en egypte', start: new Date(), duration: new Date(), running: true},
@@ -20,15 +20,16 @@ export class ServiceImpl{
     Ajoute un projet
     @param : le nom du projet (String)
   */
-  AjouterProjet(nom: string){
-    console.log("Quelqu'un essaie de créer un projet nommé " + nom);
+  AjouterProjet(nom: string) {
+    this.projets.push({name: nom, tasks: []});
+    console.log("Projet " + nom + "crée");
   }
 
   /*
     Ajoute une tâche
     @param : le nom de la tâche (String), le projet associé (Project, nullable)
   */
-  AjouterTache(nom: string, projet: Project){
+  AjouterTache(nom: string, projet: Project) {
     console.log("Quelqu'un essaie de créer une tâche nommé " + nom);
   }
 
@@ -37,7 +38,7 @@ export class ServiceImpl{
     @param : le nom a chercher (String)
     @return : un objet Task (nullable)
   */
-  TrouverTache(nom: String){
+  TrouverTache(nom: String) {
     console.log("Quelqu'un cherche la tâche " + nom);
     return null;
   }
@@ -47,7 +48,7 @@ export class ServiceImpl{
     @param : le nom a chercher (String)
     @return : un objet Project (nullable)
   */
-  TrouverProjet(nom: String){
+  TrouverProjet(nom: String) {
     console.log("Quelqu'un cherche la tâche " + nom);
     return this.projets[0];
   }
@@ -56,7 +57,7 @@ export class ServiceImpl{
     Retourne tous les projets
     @return : un array de Project
   */
-  GetProjets(){
+  GetProjets() {
     return this.projets;
   }
 }
