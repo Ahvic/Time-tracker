@@ -1,5 +1,5 @@
-import { Task } from "../models/Task";
-import { Project } from "../models/Project"
+import { Task } from "../Modele/Task";
+import { Project } from "../Modele/Project"
 
 export class ServiceImpl{
 
