@@ -48,13 +48,25 @@ export class ServiceImpl {
   }
 
   /*
+    Modifie une tâche
+    @param : le nom de la tâche (String), le projet associé (Project, nullable)
+  */
+  ModifTache(nom: string) {
+    this.taches.push({name: nom, start: new Date(), duration: new Date(), running: false})
+    console.log("Tâche " + nom + "ajoutée");
+  }
+
+  /*
     Trouve une tâche en fonction de son nom
     @param : le nom a chercher (String)
     @return : un objet Task (nullable)
   */
   TrouverTache(nom: String) {
-    console.log("Quelqu'un cherche la tâche " + nom);
-    return null;
+    for (let i = 0; i < this.taches.length; i++) {
+      if(this.taches[i].name == nom){
+        return this.taches[i];
+      }
+    }
   }
 
   /*
@@ -63,8 +75,11 @@ export class ServiceImpl {
     @return : un objet Project (nullable)
   */
   TrouverProjet(nom: String) {
-    console.log("Quelqu'un cherche la tâche " + nom);
-    return this.projets[0];
+    for (let i = 0; i < this.projets.length; i++) {
+      if(this.projets[i].name == nom){
+        return this.projets[i];
+      }
+    }
   }
 
   /*
