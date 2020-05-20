@@ -2,14 +2,22 @@
   <a class="list-group-item list-group-item-action disabled">Quick start</a>
 </div>
 
-Tâche en cours
-
 <div>
+  <h4>Tâche en cours</h4>
+
   <a class="list-group-item list-group-item-action disabled">Toutes les tâches</a>
   <a class="list-group-item list-group-item-action disabled">Les tâches solitaires</a>
 </div>
 
-Liste des projets simplifiés
+<div>
+  <h4>Liste des projets</h4>
+
+  <ul class="list-group">
+    <app-projet-simple *ngFor="let projet of projets"
+                       [nomProjet]="projet.name"
+                       (click)="onSelect(projet)"></app-projet-simple>
+  </ul>
+</div>
 
 <div>
   <a routerLink="creerProjet" class="list-group-item list-group-item-action">Nouveau projet</a>

@@ -3,7 +3,13 @@ import { Project } from "../Modele/Project"
 
 export class ServiceImpl{
 
-  projet = ["initial"];
+  projets: Project[] = [
+    {name: 'Abattre DIO', tasks: null},
+    {name: 'Faire Josuke', tasks: null},
+    {name: 'Manger une salade césar', tasks: null}
+  ];
+
+  taches = [];
 
   /*
     Ajoute un projet
@@ -29,5 +35,23 @@ export class ServiceImpl{
   TrouverTache(nom: String){
     console.log("Quelqu'un cherche la tâche " + nom);
     return null;
+  }
+
+  /*
+    Trouve un projet en fonction de son nom
+    @param : le nom a chercher (String)
+    @return : un objet Project (nullable)
+  */
+  TrouverProjet(nom: String){
+    console.log("Quelqu'un cherche la tâche " + nom);
+    return this.projets[0];
+  }
+
+  /*
+    Retourne tous les projets
+    @return : un array de Project
+  */
+  GetProjets(){
+    return this.projets;
   }
 }

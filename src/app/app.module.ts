@@ -8,10 +8,13 @@ import { CreeProjetComponent } from './Vue/cree-projet/cree-projet.component';
 import { ServiceImpl } from './Services/serviceImpl';
 import { Routes, RouterModule } from '@angular/router';
 import { PrincipalComponent } from './Vue/principal/principal.component';
+import { ProjetSimpleComponent } from './Vue/projet-simple/projet-simple.component';
+import { ProjetDetailComponent } from './Vue/projet-detail/projet-detail.component';
 
 const appRoutes: Routes = [
   { path: '', component: PrincipalComponent },
-  { path: 'creerProjet', component: CreeProjetComponent }
+  { path: 'creerProjet', component: CreeProjetComponent },
+  { path: 'detailProjet/:nom', component: ProjetDetailComponent }
 ];
 
 
@@ -19,7 +22,9 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     CreeProjetComponent,
-    PrincipalComponent
+    PrincipalComponent,
+    ProjetSimpleComponent,
+    ProjetDetailComponent
   ],
   imports: [
     BrowserModule,
