@@ -18,7 +18,7 @@ export class CreeProjetComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    console.log(form.value);
+    this.services.AjouterProjet(form.value.name);
 
     //On renvoi l'utilisateur sur le menu principal
     this.router.navigate([''])
