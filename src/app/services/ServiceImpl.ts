@@ -3,13 +3,18 @@ import { Project } from "../Modele/Project"
 
 export class ServiceImpl{
 
-  projets: Project[] = [
-    {name: 'Abattre DIO', tasks: null},
-    {name: 'Faire Josuke', tasks: null},
-    {name: 'Manger une salade césar', tasks: null}
+  taches: Task[] = [
+    {name: 'Aller en egypte', start: new Date(), duration: new Date(), running: true},
+    {name: 'Louer un sous-marin', start: new Date(), duration: new Date(), running: true},
+    {name: 'Pécho une L1 japonaise', start: new Date(), duration: new Date(), running: true},
+    {name: 'Mettre sa cigarette dans le bon sens', start: new Date(), duration: new Date(), running: true}
   ];
 
-  taches = [];
+  projets: Project[] = [
+    {name: 'Abattre DIO', tasks: [this.taches[0], this.taches[1]]},
+    {name: 'Faire Josuke', tasks: [this.taches[2]]},
+    {name: 'Manger une salade césar', tasks: [this.taches[3]]}
+  ];
 
   /*
     Ajoute un projet
@@ -38,7 +43,7 @@ export class ServiceImpl{
   }
 
   /*
-    Trouve un projet en fonction de son nom
+    Trouve un projet qui a le nom en paramètre
     @param : le nom a chercher (String)
     @return : un objet Project (nullable)
   */
