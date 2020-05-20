@@ -4,10 +4,10 @@ import { Project } from "../Modele/Project"
 export class ServiceImpl {
 
   taches: Task[] = [
-    {name: 'Aller en egypte', start: new Date(), duration: new Date(), running: true},
-    {name: 'Louer un sous-marin', start: new Date(), duration: new Date(), running: true},
-    {name: 'Pécho une L1 japonaise', start: new Date(), duration: new Date(), running: true},
-    {name: 'Mettre sa cigarette dans le bon sens', start: new Date(), duration: new Date(), running: true}
+    {name: 'Aller en egypte', start: new Date(), duration: new Date(), running: false},
+    {name: 'Louer un sous-marin', start: new Date(), duration: new Date(), running: false},
+    {name: 'Pécho une L1 japonaise', start: new Date(), duration: new Date(), running: false},
+    {name: 'Mettre sa cigarette dans le bon sens', start: new Date(), duration: new Date(), running: false}
   ];
 
   projets: Project[] = [
@@ -30,7 +30,21 @@ export class ServiceImpl {
     @param : le nom de la tâche (String), le projet associé (Project, nullable)
   */
   AjouterTache(nom: string, projet: Project) {
-    console.log("Quelqu'un essaie de créer une tâche nommé " + nom);
+    for (let i = 0; i < this.taches.length; i++) {
+      if(this.taches[i].name == nom){
+        projet.tasks.push(this.taches[i]);
+      }
+    }
+    console.log("Tâche " + nom + "ajoutée");
+  }
+
+  /*
+    Crée une tâche
+    @param : le nom de la tâche (String), le projet associé (Project, nullable)
+  */
+  CreeTache(nom: string) {
+    this.taches.push({name: nom, start: new Date(), duration: new Date(), running: false})
+    console.log("Tâche " + nom + "ajoutée");
   }
 
   /*
