@@ -1,0 +1,30 @@
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <div class="form-group">
+    <label for="name">Nom de la tâche</label>
+    <input type="text"
+           id="name"
+           name="name"
+           ngModel
+           class="form-control">
+
+   <label for="projets">Choisir un projet</label>
+   <app-projet-simple *ngFor="let projet of allProjects"
+                      [nomProjet]="projet.name"></app-projet-simple>
+  </div>
+
+  <div>
+    <label for="durée">Durée de la tâche</label>
+    <p>{{ tache.duration | date: 'hh:mm:ss' }}</p>
+  </div>
+
+  <div>
+    <button class="btn btn-secondary"
+            type="submit">Reset la durée</button>
+
+    <button class="btn btn-danger"
+            type="submit">Supprimer</button>
+
+    <button class="btn btn-primary"
+            type="submit">Enregistrer</button>
+  </div>
+</form>

@@ -10,11 +10,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { PrincipalComponent } from './Vue/principal/principal.component';
 import { ProjetSimpleComponent } from './Vue/projet-simple/projet-simple.component';
 import { ProjetDetailComponent } from './Vue/projet-detail/projet-detail.component';
+import { TacheSimpleComponent } from './Vue/tache-simple/tache-simple.component';
+import { CreeTacheComponent } from './Vue/cree-tache/cree-tache.component';
 
 const appRoutes: Routes = [
   { path: '', component: PrincipalComponent },
   { path: 'creerProjet', component: CreeProjetComponent },
-  { path: 'detailProjet/:nom', component: ProjetDetailComponent }
+  { path: 'detailProjet/:nom', component: ProjetDetailComponent },
+  { path: 'creerTache/:nom/:projet', component: CreeTacheComponent },
 ];
 
 
@@ -24,7 +27,9 @@ const appRoutes: Routes = [
     CreeProjetComponent,
     PrincipalComponent,
     ProjetSimpleComponent,
-    ProjetDetailComponent
+    ProjetDetailComponent,
+    TacheSimpleComponent,
+    CreeTacheComponent
   ],
   imports: [
     BrowserModule,

@@ -59,4 +59,24 @@ export class ServiceImpl{
   GetProjets(){
     return this.projets;
   }
+
+  /*
+    Met à jour les durées des tâches qui tournent
+    Je sais pas comment l'appeler toutes les secondes
+  */
+  MajDureeTaches(){
+
+  }
+
+  /*
+    Allume ou éteint une tâche
+    @param : le nom de la tâche (String)
+  */
+  allumeEteintTache(nom: String){
+
+  }
+
+  /*
+    
+  */
 }
