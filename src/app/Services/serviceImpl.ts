@@ -43,16 +43,27 @@ export class ServiceImpl {
     @param : le nom de la tâche (String), le projet associé (Project, nullable)
   */
   CreeTache(nom: string) {
-    this.taches.push({name: nom, start: new Date(), duration: new Date(), running: false})
+    this.taches.push({name: nom, start: new Date(), duration: new Date(), running: false});
     console.log("Tâche " + nom + "ajoutée");
   }
 
   /*
-    Modifie une tâche
+    Remove une tâche
     @param : le nom de la tâche (String), le projet associé (Project, nullable)
   */
-  ModifTache(nom: string) {
-    this.taches.push({name: nom, start: new Date(), duration: new Date(), running: false})
+  RemoveTache(nom: string) {
+    for (let i = 0; i < this.taches.length; i++) {
+      if(this.taches[i].name == nom){
+        delete this.taches[i];
+      }
+    }
+    for (let i = 0; i < this.projets.length; i++) {
+      for (let j = 0; j < this.projets[i].tasks.length; j++) {
+        if(this.projets[i].tasks[j].name == nom){
+          delete this.projets[i].tasks[j];
+        }
+      }
+    }
     console.log("Tâche " + nom + "ajoutée");
   }
 
