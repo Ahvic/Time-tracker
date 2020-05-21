@@ -100,4 +100,12 @@ export class ServiceImpl {
   GetProjets() {
     return this.projets;
   }
+
+  /*
+    Inverse la valeur running de la tâche spécifiée
+    @param : le nom de la tache (String)
+  */
+  AllumeEteintTache(nom: String){
+
+  }
 }

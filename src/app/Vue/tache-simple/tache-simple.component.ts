@@ -21,11 +21,14 @@ export class TacheSimpleComponent implements OnInit {
   }
 
   onAllumerEtendre(){
-    this.services.allumeEteintTache(this.tache.name);
+    this.services.AllumeEteintTache(this.tache.name);
   }
 
   onModify(){
     //Ouvre la page pour modifier une tâche
-    this.router.navigate(['/creerTache', this.tache.name, this.projet.name]);
+    if(this.projet != null)
+      this.router.navigate(['/creerTache', this.tache.name, this.projet.name]);
+    else
+      this.router.navigate(['/creerTache', this.tache.name, "empty"]);
   }
 }

@@ -23,6 +23,6 @@ export class ProjetDetailComponent implements OnInit {
 
   nouvTache(){
     //Ouvre la page pour modifier une tâche
-    this.router.navigate(['/creerTache', '', this.projet.name]);
+    this.router.navigate(['/creerTache', "empty", this.projet.name]);
   }
 }
