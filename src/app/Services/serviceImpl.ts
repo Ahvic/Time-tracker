@@ -4,16 +4,9 @@ import { Project } from "../Modele/Project"
 export class ServiceImpl {
 
   taches: Task[] = [
-    {name: 'Aller en egypte', start: new Date(), duration: new Date(), running: false},
-    {name: 'Louer un sous-marin', start: new Date(), duration: new Date(), running: false},
-    {name: 'Pécho une L1 japonaise', start: new Date(), duration: new Date(), running: false},
-    {name: 'Mettre sa cigarette dans le bon sens', start: new Date(), duration: new Date(), running: false}
   ];
 
   projets: Project[] = [
-    {name: 'Abattre DIO', tasks: [this.taches[0], this.taches[1]]},
-    {name: 'Faire Josuke', tasks: [this.taches[2]]},
-    {name: 'Manger une salade césar', tasks: [this.taches[3]]}
   ];
 
   /*
@@ -23,7 +16,28 @@ export class ServiceImpl {
   */
   CreerProjet(nom: string) {
     this.projets.push({name: nom, tasks: []});
+    localStorage.setItem("projects",JSON.stringify(this.projets));
+    console.log("Projet " + nom + "crée");
     console.log("Projet " + nom + " crée");
+  }
+
+  Load() {
+    this.projets = JSON.parse(localStorage.getItem("projects"));
+    this.taches = JSON.parse(localStorage.getItem("tasks"));
+  }
+
+  /*
+    Ajoute une tâche
+    @param : le nom de la tâche (String), le projet associé (Project, nullable)
+  */
+  AjouterTache(nom: string, projet: Project) {
+    for (let i = 0; i < this.taches.length; i++) {
+      if(this.taches[i].name == nom){
+        projet.tasks.push(this.taches[i]);
+      }
+    }
+    localStorage.setItem("tasks",JSON.stringify(this.taches));
+    console.log("Tâche " + nom + "ajoutée");
   }
 
   /*
@@ -33,6 +47,8 @@ export class ServiceImpl {
   */
   CreeTache(nom: string) {
     this.taches.push({name: nom, start: new Date(), duration: new Date(), running: false});
+    localStorage.setItem("tasks",JSON.stringify(this.taches));
+    console.log("Tâche " + nom + "ajoutée");
     console.log("Tâche " + nom + " crée");
   }
 
@@ -61,6 +77,8 @@ export class ServiceImpl {
         }
       }
     }
+    localStorage.setItem("tasks",JSON.stringify(this.taches));
+    localStorage.setItem("projects",JSON.stringify(this.projets));
     console.log("Tâche " + nom + "ajoutée");
   }
 
