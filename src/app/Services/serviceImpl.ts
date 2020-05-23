@@ -26,7 +26,7 @@ export class ServiceImpl {
   }
 
   /*
-    Ajoute une tâche
+    Ajoute une tâche à un projet
     @param : le nom de la tâche (String), le projet associé (Project, nullable)
   */
   AjouterTache(nom: string, projet: Project) {
@@ -108,4 +108,21 @@ export class ServiceImpl {
   AllumeEteintTache(nom: String){
 
   }
+
+  /*
+    Change une tache et les projets auquels elle est associée
+    Permet aussi de créer une tache
+    @param : la tache (Task), le projet choisi pour cette tache
+  */
+  ModifierTache(tache: Task, projet: Project){
+
+  }
+
+  /*
+    Retourne toutes les tâches qui ne sont dans aucun projet
+  */
+  ToutesTachesOphelines(){
+
+  }
+
 }

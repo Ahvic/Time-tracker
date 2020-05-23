@@ -17,18 +17,13 @@ export class CreeTacheComponent implements OnInit {
   nomTache: String;
   nomProjet: String;
   projets: Project[];
-
-  //jQuery
+  projetChoisi: Project;
 
   constructor(private services: ServiceImpl,
               private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
-
-    $('button').click(function(){
-      alert('Wass up!');
-    });
 
     this.nomTache = this.route.snapshot.paramMap.get('nom');
     this.nomProjet = this.route.snapshot.paramMap.get('projet');
@@ -38,18 +33,33 @@ export class CreeTacheComponent implements OnInit {
       this.tache = this.services.TrouverTache(this.nomTache);
     }
     else{
-      this.tache = new Task();
+      this.tache = {name: "none", start: new Date(), duration: new Date(), running: false}
+      $('#temps').hide();
+      $('#supprimer').hide();
+    }
+
+    if(this.nomProjet != "empty"){
+      this.projetChoisi = this.services.TrouverProjet(this.nomProjet);
     }
   }
 
-  onSubmit(form: NgForm){
+  onEnregistrer(){
 
+  }
+
+  onReset(){
+
+  }
+
+  onSupprimer(){
+    console.log("supprimé");
+    this.services.RemoveTache(this.tache.name);
+    this.router.navigate(['']);
   }
 
   onSelect(projet: Project){
     console.log("On a choisi " + projet.name);
 
-    //Ouvre la page de detail
-    //this.router.navigate(['/detailProjet', projet.name]);
+    this.projetChoisi = projet;
   }
 }

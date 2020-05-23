@@ -1,33 +1,30 @@
-<button> Click me </button>
 
-<form (ngSubmit)="onSubmit(f)" #f="ngForm">
-  <div class="form-group">
-    <label for="name">Nom de la tâche</label>
-    <input type="text"
-           ng-model="name"
-           placeholder= "{{nomTache}}"
-           class="form-control">
- </div>
-</form>
-   <label for="projets">Choisir un projet</label>
-     <ul class="list-group">
-       <app-projet-simple *ngFor="let projet of projets"
-                          [nomProjet]="projet.name"
-                          (click)="onSelect(projet)"></app-projet-simple>
-     </ul>
+<div class="form-group">
+  <label for="name">Nom de la tâche</label>
+  <input type="text"
+         ng-model="name"
+         placeholder= "{{nomTache}}"
+         class="form-control">
+</div>
+ <select class="form-control">
+   <option selected>Choisir un projet</option>
+   <option *ngFor="let projet of projets"
+           (click)="onSelect(projet)">{{projet.name}}</option>
+ </select>
 
-  <div>
-    <label for="durée">Durée de la tâche</label>
-    <p>{{ tache.duration | date: 'hh:mm:ss' }}</p>
+<div id="temps">
+  <label for="durée">Durée de la tâche</label>
+  <p>{{ tache.duration | date: 'hh:mm:ss' }}</p>
 
-    <button class="btn btn-secondary"
-            type="submit">Reset la durée</button>
-  </div>
+  <button class="btn btn-secondary"
+          (click)="onSupprimer()">Reset la durée</button>
+</div>
 
-  <div>
-    <button class="btn btn-danger"
-            type="submit">Supprimer</button>
+<div>
+  <button id="supprimer"
+          class="btn btn-danger"
+          (click)="onSupprimer()">Supprimer</button>
 
-    <button class="btn btn-primary"
-            type="submit">Enregistrer</button>
-  </div>
+  <button class="btn btn-primary"
+          (click)="onEnregistrer()">Enregistrer</button>
+</div>
