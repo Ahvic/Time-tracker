@@ -18,13 +18,12 @@ export class PrincipalComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
+    this.services.Load();
     this.projets = this.services.GetProjets();
     this.tasksRunning = this.services.GetAllTachesRunning();
   }
 
   onSelect(projet: Project){
-    console.log("Quelqu'un veut voir les détails de " + projet.name);
-
     //Ouvre la page de detail
     this.router.navigate(['/detailProjet', projet.name]);
   }

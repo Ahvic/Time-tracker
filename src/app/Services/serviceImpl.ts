@@ -17,13 +17,24 @@ export class ServiceImpl {
   CreerProjet(nom: string) {
     this.projets.push({name: nom, tasks: []});
     localStorage.setItem("projects",JSON.stringify(this.projets));
-    console.log("Projet " + nom + "crée");
     console.log("Projet " + nom + " crée");
   }
 
+  /*
+    Charge les données locales
+  */
   Load() {
     this.projets = JSON.parse(localStorage.getItem("projects"));
     this.taches = JSON.parse(localStorage.getItem("tasks"));
+
+    //Premier lancement
+    if(this.projets == null)
+      this.projets = [];
+
+    if(this.taches == null)
+      this.taches = [];
+
+    console.log("Changement local terminé");
   }
 
   /*
@@ -49,7 +60,6 @@ export class ServiceImpl {
     this.taches.push({name: nom, start: new Date(), duration: new Date(), running: false});
     localStorage.setItem("tasks",JSON.stringify(this.taches));
     console.log("Tâche " + nom + "ajoutée");
-    console.log("Tâche " + nom + " crée");
   }
 
   /*

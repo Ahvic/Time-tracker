@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ServiceImpl } from '../../Services/serviceImpl';
 import { Task } from "../../Modele/Task";
 import { Project } from "../../Modele/Project";
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-tache-simple',
@@ -26,5 +27,6 @@ export class TacheSimpleComponent implements OnInit {
 
   onModify(){
     //Ouvre la page pour modifier une tâche
+    this.router.navigate(['modifierTache/', this.tache.name]);
   }
 }

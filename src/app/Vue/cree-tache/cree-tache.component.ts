@@ -46,7 +46,7 @@ export class CreeTacheComponent implements OnInit {
       if(form.value.projet != "null" && form.value.projet != "")
         this.services.AssigneTacheAProjet(form.value.nom, form.value.projet);
 
-      //this.router.navigate(['']);
+      this.router.navigate(['']);
     }
     else
       alert("Le nom ne peut pas être vide, la tâche n'a pas été crée.");

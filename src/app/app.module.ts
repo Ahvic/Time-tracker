@@ -21,7 +21,7 @@ const appRoutes: Routes = [
   { path: 'creerProjet', component: CreeProjetComponent },
   { path: 'detailProjet/:nom', component: ProjetDetailComponent },
   { path: 'creerTache/:quickstart', component: CreeTacheComponent },
-  { path: 'modifierTache/:nom/:projet', component: ModifierTacheComponent },
+  { path: 'modifierTache/:nom', component: ModifierTacheComponent },
   { path: 'taches-solitaires', component: TachesSolitairesComponent },
   { path: 'toutes-les-taches', component: ToutesLesTachesComponent },
 ];

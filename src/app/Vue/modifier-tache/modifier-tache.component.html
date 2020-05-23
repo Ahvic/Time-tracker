@@ -1,1 +1,25 @@
-<p>modifier-tache works!</p>
+<h4 id="baniereNormal">Modification d'une tâche</h4>
+
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <div class="form-group">
+    <label for="nom">Nom de la tâche</label>
+    <input type="text" name="nom" class="form-control" required="required" placeholder="{{ancienNom}}" ngModel>
+  </div>
+
+  <label for="projet">Choisir le projet associé</label>
+  <select name="projet" class="form-control" ngModel>
+    <option selected value="null">Aucun</option>
+    <option *ngFor="let projet of projets">{{projet.name}}</option>
+  </select>
+
+  <div>
+    <label for="durée">Durée de la tâche</label>
+    <p>{{ tache.duration | date: 'HH:mm:ss' }}</p>
+
+    <button class="btn btn-secondary" type="button" (click)="onResetDuration()">Reset la durée</button>
+  </div>
+
+  <button class="btn btn-primary" type="submit">Enregistrer</button>
+</form>
+
+<button routerLink="" class="btn btn-danger">Retour</button>
