@@ -146,10 +146,10 @@ export class ServiceImpl {
   /*
     Change une tache et les projets auquels elle est associée
     Permet aussi de créer une tache
-    @param : la tache (Task), le projet choisi pour cette tache
+    @param : l'ancien nom (String), le nouveau (String), durée reset ? (Boolean), nouveau projet associé (String, pe vide)
   */
-  ModifierTache(tache: Task, projet: Project){
-
+  ModifierTache(nomOriginal: string, nouvNom: string, durationReset: boolean, projet: string){
+    console.log("original: " + nomOriginal + " nouvNom: " + nouvNom + " reset: " + durationReset + " projet: " + projet)
   }
 
   /*
