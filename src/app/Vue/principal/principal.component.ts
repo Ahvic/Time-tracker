@@ -28,4 +28,8 @@ export class PrincipalComponent implements OnInit {
     //Ouvre la page de detail
     this.router.navigate(['/detailProjet', projet.name]);
   }
+
+  onQuickStart(){
+    this.router.navigate(['/creerTache', "true"]);
+  }
 }

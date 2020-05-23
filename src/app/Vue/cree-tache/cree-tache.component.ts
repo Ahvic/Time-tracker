@@ -14,6 +14,7 @@ import * as $ from 'jquery';
 export class CreeTacheComponent implements OnInit {
 
   projets: Project[];
+  quickstart: boolean;
 
   constructor(private services: ServiceImpl,
               private route: ActivatedRoute,
@@ -23,18 +24,29 @@ export class CreeTacheComponent implements OnInit {
 
   ngOnInit(): void {
     this.projets = this.services.GetProjets();
+    this.quickstart = (this.route.snapshot.paramMap.get("quickstart") == "true");
+
+    if(!this.quickstart){
+      $('#baniereQuick').hide();
+    }else{
+      $('#baniereNormal').hide();
+      $('#demarrage').hide();
+    }
   }
 
   onSubmit(form: NgForm){
     console.log(form.value);
 
     if(form.value.nom != ""){
-      this.services.CreeTache(form.value.nom);
+      if(this.quickstart || form.value.demarrage)
+        this.services.QuickStart(form.value.nom);
+      else
+        this.services.CreeTache(form.value.nom);
 
       if(form.value.projet != "null" && form.value.projet != "")
         this.services.AssigneTacheAProjet(form.value.nom, form.value.projet);
 
-      this.router.navigate(['']);
+      //this.router.navigate(['']);
     }
     else
       alert("Le nom ne peut pas être vide, la tâche n'a pas été crée.");

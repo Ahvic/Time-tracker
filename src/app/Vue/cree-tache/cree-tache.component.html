@@ -1,3 +1,5 @@
+<h4 id="baniereNormal">Création d'une nouvelle tâche</h4>
+<h4 id="baniereQuick">Quickstart</h4>
 
 <form (ngSubmit)="onSubmit(f)" #f="ngForm">
   <div class="form-group">
@@ -5,11 +7,16 @@
     <input type="text" name="nom" class="form-control" required="required" ngModel>
   </div>
 
-   <label for="projet">Choisir un projet</label>
-   <select name="projet" class="form-control" ngModel>
-     <option selected value="null">Aucun</option>
-     <option *ngFor="let projet of projets">{{projet.name}}</option>
-   </select>
+  <label for="projet">Choisir le projet associé</label>
+  <select name="projet" class="form-control" ngModel>
+   <option selected value="null">Aucun</option>
+   <option *ngFor="let projet of projets">{{projet.name}}</option>
+  </select>
 
-    <button class="btn btn-primary" type="submit">Enregistrer</button>
+  <div class="custom-control custom-checkbox" id="demarrage">
+   <input type="checkbox" name="demarrage" class="custom-control-input" ngModel>
+   <label class="custom-control-label" for="checkBoxDepartTimer">Démarrer la tâche tout de suite ?</label>
+  </div>
+
+  <button class="btn btn-primary" type="submit">Enregistrer</button>
 </form>

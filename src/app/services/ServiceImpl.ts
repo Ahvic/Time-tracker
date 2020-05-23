@@ -130,4 +130,12 @@ export class ServiceImpl {
     return this.taches;
   }
 
+  /*
+    Crée une tache en lancant directement le timer
+    @param : nom de la tache
+  */
+  QuickStart(nom: String){
+    console.log("QuickStart " + nom + " crée");
+  }
+
 }
