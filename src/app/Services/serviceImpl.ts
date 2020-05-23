@@ -59,6 +59,15 @@ export class ServiceImpl {
     @param : le nom de la tâche (String), le projet associé (String, nullable)
   */
   AssigneTacheAProjet(nom: string, projet: string) {
+    let p = this.TrouverProjet(projet);
+    for (let i = 0; i < p.tasks.length; i++) {
+      if(p.tasks[i].name == nom){
+        console.log("déjà dans projet");
+        return false;
+      }
+    }
+    let n = this.TrouverTache(nom);
+    p.tasks.push(n);
     console.log(nom + " assigné à " + projet);
   }
 
