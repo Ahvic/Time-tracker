@@ -9,6 +9,8 @@ export class ServiceImpl {
   projets: Project[] = [
   ];
 
+
+
   /*
     Ajoute un projet
     Ne fait pas de duplicat
@@ -67,6 +69,15 @@ export class ServiceImpl {
     @param : le nom de la tâche (String), le projet associé (String, nullable)
   */
   AssigneTacheAProjet(nom: string, projet: string) {
+    let p = this.TrouverProjet(projet);
+    for (let i = 0; i < p.tasks.length; i++) {
+      if(p.tasks[i].name == nom){
+        console.log("déjà dans projet");
+        return false;
+      }
+    }
+    let n = this.TrouverTache(nom);
+    p.tasks.push(n);
     console.log(nom + " assigné à " + projet);
   }
 
@@ -131,7 +142,15 @@ export class ServiceImpl {
     @param : le nom de la tache (String)
   */
   AllumeEteintTache(nom: String){
-
+    for (let i = 0; i < this.taches.length; i++) {
+      if(this.taches[i].name == nom){
+        if(this.taches[i].running == false){
+          this.taches[i].running = true;
+        }else{
+          this.taches[i].running = false;
+        }
+      }
+    }
   }
 
   /*
@@ -146,8 +165,19 @@ export class ServiceImpl {
   /*
     Retourne toutes les tâches qui ne sont dans aucun projet
   */
+
   GetAllTachesSolitaires(){
-    return this.taches;
+    let maliste = this.taches;
+    for (let n = 0; n < this.taches.length; n++) {
+      for (let i = 0; i < this.projets.length; i++) {
+        for (let j = 0; j < this.projets[i].tasks.length; j++) {
+          if(this.taches[n] == this.projets[i].tasks[j]){
+            delete maliste[n];
+          }
+        }
+      }
+    }
+    return maliste;
   }
 
   /*
