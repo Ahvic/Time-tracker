@@ -12,12 +12,12 @@ import { Project } from "../../Modele/Project";
 export class TacheSimpleComponent implements OnInit {
 
   @Input() tache: Task;
-  @Input() projet: Project;
 
   constructor(private services: ServiceImpl,
               private router: Router) { }
 
   ngOnInit(): void {
+
   }
 
   onAllumerEtendre(){
@@ -26,9 +26,5 @@ export class TacheSimpleComponent implements OnInit {
 
   onModify(){
     //Ouvre la page pour modifier une tâche
-    if(this.projet != null)
-      this.router.navigate(['/creerTache', this.tache.name, this.projet.name]);
-    else
-      this.router.navigate(['/creerTache', this.tache.name, "empty"]);
   }
 }

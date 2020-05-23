@@ -121,8 +121,16 @@ export class ServiceImpl {
   /*
     Retourne toutes les tâches qui ne sont dans aucun projet
   */
-  ToutesTachesOphelines(){
+  GetAllTachesSolitaires(){
+    return this.taches;
+  }
 
+  /*
+    Retourne toutes les tâches qui sont actives
+    @return : un array de Task
+  */
+  GetAllTachesRunning(){
+    return this.taches;
   }
 
 }

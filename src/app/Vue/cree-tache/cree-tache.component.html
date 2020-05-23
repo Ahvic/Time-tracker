@@ -12,19 +12,7 @@
            (click)="onSelect(projet)">{{projet.name}}</option>
  </select>
 
-<div id="temps">
-  <label for="durée">Durée de la tâche</label>
-  <p>{{ tache.duration | date: 'hh:mm:ss' }}</p>
-
-  <button class="btn btn-secondary"
-          (click)="onSupprimer()">Reset la durée</button>
-</div>
-
 <div>
-  <button id="supprimer"
-          class="btn btn-danger"
-          (click)="onSupprimer()">Supprimer</button>
-
   <button class="btn btn-primary"
           (click)="onEnregistrer()">Enregistrer</button>
 </div>

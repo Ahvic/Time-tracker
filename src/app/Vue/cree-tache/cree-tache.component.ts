@@ -25,36 +25,10 @@ export class CreeTacheComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.nomTache = this.route.snapshot.paramMap.get('nom');
-    this.nomProjet = this.route.snapshot.paramMap.get('projet');
-    this.projets = this.services.GetProjets();
-
-    if(this.nomTache != "empty"){
-      this.tache = this.services.TrouverTache(this.nomTache);
-    }
-    else{
-      this.tache = {name: "none", start: new Date(), duration: new Date(), running: false}
-      $('#temps').hide();
-      $('#supprimer').hide();
-    }
-
-    if(this.nomProjet != "empty"){
-      this.projetChoisi = this.services.TrouverProjet(this.nomProjet);
-    }
   }
 
   onEnregistrer(){
 
-  }
-
-  onReset(){
-
-  }
-
-  onSupprimer(){
-    console.log("supprimé");
-    this.services.RemoveTache(this.tache.name);
-    this.router.navigate(['']);
   }
 
   onSelect(projet: Project){

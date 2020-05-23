@@ -3,10 +3,15 @@
 </div>
 
 <div>
-  <h4>Tâche en cours</h4>
+  <h4>Liste des tâches en cours</h4>
 
-  <a class="list-group-item list-group-item-action disabled">Toutes les tâches</a>
-  <a class="list-group-item list-group-item-action disabled">Les tâches solitaires</a>
+  <ul class="list-group">
+  <app-tache-simple *ngFor="let tache of tasksRunning"
+                     [tache]="tache"></app-tache-simple>
+  </ul>
+
+  <a routerLink="toutes-les-taches" class="list-group-item list-group-item-action">Toutes les tâches</a>
+  <a routerLink="taches-solitaires" class="list-group-item list-group-item-action">Toutes les tâches solitaires</a>
 </div>
 
 <div>
@@ -14,12 +19,11 @@
 
   <ul class="list-group">
     <app-projet-simple *ngFor="let projet of projets"
-                       [nomProjet]="projet.name"
+                       [projet]="projet"
                        (click)="onSelect(projet)"></app-projet-simple>
   </ul>
 </div>
 
 <div>
   <a routerLink="creerProjet" class="list-group-item list-group-item-action">Nouveau projet</a>
-  <a class="list-group-item list-group-item-action disabled">Historique</a>
 </div>
