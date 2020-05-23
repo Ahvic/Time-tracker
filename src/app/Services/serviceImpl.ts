@@ -18,38 +18,35 @@ export class ServiceImpl {
 
   /*
     Ajoute un projet
+    Ne fait pas de duplicat
     @param : le nom du projet (String)
   */
-  AjouterProjet(nom: string) {
+  CreerProjet(nom: string) {
     this.projets.push({name: nom, tasks: []});
-    console.log("Projet " + nom + "crée");
-  }
-
-  /*
-    Ajoute une tâche à un projet
-    @param : le nom de la tâche (String), le projet associé (Project, nullable)
-  */
-  AjouterTache(nom: string, projet: Project) {
-    for (let i = 0; i < this.taches.length; i++) {
-      if(this.taches[i].name == nom){
-        projet.tasks.push(this.taches[i]);
-      }
-    }
-    console.log("Tâche " + nom + "ajoutée");
+    console.log("Projet " + nom + " crée");
   }
 
   /*
     Crée une tâche
+    Ne fait pas de duplicat
     @param : le nom de la tâche (String), le projet associé (Project, nullable)
   */
   CreeTache(nom: string) {
     this.taches.push({name: nom, start: new Date(), duration: new Date(), running: false});
-    console.log("Tâche " + nom + "ajoutée");
+    console.log("Tâche " + nom + " crée");
   }
 
   /*
-    Remove une tâche
-    @param : le nom de la tâche (String), le projet associé (Project, nullable)
+    Ajoute une tâche à un projet
+    @param : le nom de la tâche (String), le projet associé (String, nullable)
+  */
+  AssigneTacheAProjet(nom: string, projet: string) {
+    console.log(nom + " assigné à " + projet);
+  }
+
+  /*
+    Supprime une tâche
+    @param : le nom de la tâche (String)
   */
   RemoveTache(nom: string) {
     for (let i = 0; i < this.taches.length; i++) {

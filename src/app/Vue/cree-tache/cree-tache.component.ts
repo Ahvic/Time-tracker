@@ -13,27 +13,30 @@ import * as $ from 'jquery';
 })
 export class CreeTacheComponent implements OnInit {
 
-  tache: Task;
-  nomTache: String;
-  nomProjet: String;
   projets: Project[];
-  projetChoisi: Project;
 
   constructor(private services: ServiceImpl,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
-
+    this.projets = this.services.GetProjets();
   }
 
-  onEnregistrer(){
+  onSubmit(form: NgForm){
+    console.log(form.value);
 
-  }
+    if(form.value.nom != ""){
+      this.services.CreeTache(form.value.nom);
 
-  onSelect(projet: Project){
-    console.log("On a choisi " + projet.name);
+      if(form.value.projet != "null" && form.value.projet != "")
+        this.services.AssigneTacheAProjet(form.value.nom, form.value.projet);
 
-    this.projetChoisi = projet;
+      this.router.navigate(['']);
+    }
+    else
+      alert("Le nom ne peut pas être vide, la tâche n'a pas été crée.");
   }
 }

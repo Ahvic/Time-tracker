@@ -21,8 +21,8 @@ export class ProjetDetailComponent implements OnInit {
     this.projet = this.services.TrouverProjet(nomProjet);
   }
 
-  nouvTache(){
+  onNouvelleTache(){
     //Ouvre la page pour modifier une tâche
-    this.router.navigate(['/creerTache', "empty", this.projet.name]);
+    this.router.navigate(['/creerTache', this.projet.name]);
   }
 }

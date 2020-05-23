@@ -1,18 +1,15 @@
 
-<div class="form-group">
-  <label for="name">Nom de la tâche</label>
-  <input type="text"
-         ng-model="name"
-         placeholder= "{{nomTache}}"
-         class="form-control">
-</div>
- <select class="form-control">
-   <option selected>Choisir un projet</option>
-   <option *ngFor="let projet of projets"
-           (click)="onSelect(projet)">{{projet.name}}</option>
- </select>
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <div class="form-group">
+    <label for="nom">Nom de la tâche</label>
+    <input type="text" name="nom" class="form-control" required="required" ngModel>
+  </div>
 
-<div>
-  <button class="btn btn-primary"
-          (click)="onEnregistrer()">Enregistrer</button>
-</div>
+   <label for="projet">Choisir un projet</label>
+   <select name="projet" class="form-control" ngModel>
+     <option selected value="null">Aucun</option>
+     <option *ngFor="let projet of projets">{{projet.name}}</option>
+   </select>
+
+    <button class="btn btn-primary" type="submit">Enregistrer</button>
+</form>

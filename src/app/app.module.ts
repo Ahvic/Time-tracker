@@ -14,12 +14,14 @@ import { TacheSimpleComponent } from './Vue/tache-simple/tache-simple.component'
 import { CreeTacheComponent } from './Vue/cree-tache/cree-tache.component';
 import { TachesSolitairesComponent } from './Vue/taches-solitaires/taches-solitaires.component';
 import { ToutesLesTachesComponent } from './Vue/toutes-les-taches/toutes-les-taches.component';
+import { ModifierTacheComponent } from './Vue/modifier-tache/modifier-tache.component';
 
 const appRoutes: Routes = [
   { path: '', component: PrincipalComponent },
   { path: 'creerProjet', component: CreeProjetComponent },
   { path: 'detailProjet/:nom', component: ProjetDetailComponent },
-  { path: 'creerTache/:nom/:projet', component: CreeTacheComponent },
+  { path: 'creerTache/:projet', component: CreeTacheComponent },
+  { path: 'modifierTache/:nom/:projet', component: ModifierTacheComponent },
   { path: 'taches-solitaires', component: TachesSolitairesComponent },
   { path: 'toutes-les-taches', component: ToutesLesTachesComponent },
 ];
@@ -35,7 +37,8 @@ const appRoutes: Routes = [
     TacheSimpleComponent,
     CreeTacheComponent,
     TachesSolitairesComponent,
-    ToutesLesTachesComponent
+    ToutesLesTachesComponent,
+    ModifierTacheComponent
   ],
   imports: [
     BrowserModule,
