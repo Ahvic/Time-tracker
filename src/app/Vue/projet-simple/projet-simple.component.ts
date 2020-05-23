@@ -8,11 +8,10 @@ import { Project } from "../../Modele/Project"
 })
 export class ProjetSimpleComponent implements OnInit {
 
-  @Input() nomProjet: string;
+  @Input() projet: Project;
 
   constructor() { }
 
   ngOnInit(): void {
   }
-
 }

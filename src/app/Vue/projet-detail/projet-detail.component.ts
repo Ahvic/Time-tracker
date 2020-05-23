@@ -13,6 +13,7 @@ export class ProjetDetailComponent implements OnInit {
   projet: Project;
 
   constructor(private services: ServiceImpl,
+              private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -20,4 +21,8 @@ export class ProjetDetailComponent implements OnInit {
     this.projet = this.services.TrouverProjet(nomProjet);
   }
 
+  onNouvelleTache(){
+    //Ouvre la page pour créer une tache
+    this.router.navigate(['/creerTache', "false"]);
+  }
 }

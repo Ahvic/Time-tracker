@@ -1,1 +1,18 @@
-<h4>Les détails du projet {{ projet.name }}</h4>
+<div>
+  <h2>Détails du projet: {{ projet.name }}</h2>
+</div>
+
+<div>
+  <h4>Liste des tâches</h4>
+
+  <ul class="list-group">
+  <app-tache-simple *ngFor="let tache of projet.tasks"
+                     [tache]="tache"></app-tache-simple>
+  </ul>
+</div>
+
+<div>
+  <h4>Ajouter une tâche</h4>
+  <button class="btn btn-primary"
+          (click)="onNouvelleTache()">Nouvelle tâche</button>
+</div>

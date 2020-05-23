@@ -2,6 +2,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { Component, OnInit } from '@angular/core';
 import { ServiceImpl } from '../../Services/serviceImpl';
 import { Project } from "../../Modele/Project"
+import { Task } from "../../Modele/Task";
 
 @Component({
   selector: 'app-principal',
@@ -11,12 +12,14 @@ import { Project } from "../../Modele/Project"
 export class PrincipalComponent implements OnInit {
 
   projets: Project[]
+  tasksRunning: Task[]
 
   constructor(private services: ServiceImpl,
               private router: Router) { }
 
   ngOnInit(): void {
     this.projets = this.services.GetProjets();
+    this.tasksRunning = this.services.GetAllTachesRunning();
   }
 
   onSelect(projet: Project){
@@ -24,5 +27,9 @@ export class PrincipalComponent implements OnInit {
 
     //Ouvre la page de detail
     this.router.navigate(['/detailProjet', projet.name]);
+  }
+
+  onQuickStart(){
+    this.router.navigate(['/creerTache', "true"]);
   }
 }

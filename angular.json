@@ -53,7 +53,9 @@
               "../Time-tracker/node_modules/bootstrap/dist/css/bootstrap.css",
               "../Time-tracker/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "../Time-tracker/node_modules/jquery/dist/jquery.min.js"
+            ]
           },
           "configurations": {
             "production": {
