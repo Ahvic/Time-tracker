@@ -5,18 +5,11 @@ import { Project } from "../Modele/Project"
 
 export class ServiceImpl {
 
-  taches: Task[] = [
-    {name: 'Aller en egypte', start: new Date(), duration: 0, older_run_duration:0, running: true},
-    {name: 'Louer un sous-marin', start: new Date(), duration: 0, older_run_duration:0, running: true},
-    {name: 'Pécho une L1 japonaise', start: new Date(), duration: 0, older_run_duration:0, running: false},
-    {name: 'Mettre sa cigarette dans le bon sens', start: new Date(), duration: 0, older_run_duration:0, running: false}
-  ];
+  taches: Task[] = [];
 
-  projets: Project[] = [
-    {name: 'Abattre DIO', tasks: [this.taches[0], this.taches[1]]},
-    {name: 'Faire Josuke', tasks: [this.taches[2]]},
-    {name: 'Manger une salade césar', tasks: [this.taches[3]]}
-  ];
+  projets: Project[] = [];
+
+  initialize: boolean = false;
 
   /*
     Affiche le contenu de taches et projets dans la console
@@ -51,7 +44,7 @@ export class ServiceImpl {
     }
 
     this.projets.push({name: nom, tasks: []});
-    localStorage.setItem("projects",JSON.stringify(this.projets));
+    this.Sauvegarde();
 
     return true;
   }
@@ -85,10 +78,44 @@ export class ServiceImpl {
   }
 
   /*
-    Charge les données locales
+    Charge les données locales au démarrage
   */
   Load() {
 
+    //localStorage.clear();
+
+    if(!this.initialize){
+      var projets_lu = JSON.parse(localStorage.getItem("projects"));
+      var taches_lu = JSON.parse(localStorage.getItem("tasks"));
+      this.initialize = true;
+
+      if(projets_lu == null)
+        projets_lu = [];
+
+      if(taches_lu == null)
+        taches_lu = [];
+
+      console.log("taille projets_lu: " + projets_lu.length + " taille taches_lu: " + taches_lu.length);
+
+      var resultat = "";
+
+      for (let i = 0; i < projets_lu.length; i++) {
+        resultat += projets_lu[i].name + " tâches:\n";
+        for (let j = 0; j < projets_lu[i].tasks.length; j++)
+         resultat += "   " + projets_lu[i].tasks[j].name + "\n";
+       resultat += "\n";
+      }
+
+      for (let i = 0; i < taches_lu.length; i++) {
+        resultat += taches_lu[i].name + " running: " + taches_lu[i].running + " durée: " + taches_lu[i].duration + " old duration: " + taches_lu[i].older_run_duration + "\n";
+      }
+
+      this.projets = projets_lu;
+      this.taches = taches_lu;
+
+      console.log(resultat);
+      console.log("Changement des données locales terminé");
+    }
   }
 
   /*
@@ -102,7 +129,7 @@ export class ServiceImpl {
       this.taches.push({name: nom, start: new Date(), duration: 0, older_run_duration:0, running: demarre});
       this.AssigneTacheAProjet(nom, projet);
 
-      localStorage.setItem("tasks",JSON.stringify(this.taches));
+      this.Sauvegarde();
       console.log("Tâche " + nom + " crée");
     }
     else{
@@ -147,7 +174,7 @@ export class ServiceImpl {
       }
 
       p.tasks.push(n);
-      localStorage.setItem("projects",JSON.stringify(this.projets));
+      this.Sauvegarde();
       console.log(nom + " assigné à " + projet);
       return true;
     }
@@ -176,8 +203,7 @@ export class ServiceImpl {
       }
     }
 
-    localStorage.setItem("tasks",JSON.stringify(this.taches));
-    localStorage.setItem("projects",JSON.stringify(this.projets));
+    this.Sauvegarde();
     console.log("Tâche " + nom + " supprimée");
   }
 
@@ -205,6 +231,8 @@ export class ServiceImpl {
         }
       }
     }
+
+    this.Sauvegarde();
   }
 
   /*
@@ -216,6 +244,7 @@ export class ServiceImpl {
 
     let tache = this.TrouverTache(nomOriginal);
     tache.name = nouvNom;
+    this.Sauvegarde();
     this.AssigneTacheAProjet(nouvNom, projet);
 
     this.DebugArrays();
@@ -263,10 +292,12 @@ export class ServiceImpl {
   MajTimer(nom: String){
     var tache: Task = this.TrouverTache(nom);
 
-    if(tache.running){
-      var ecartMilli= new Date().getTime() - tache.start.getTime();
+    if(tache != null && tache.running){
+      var ecartMilli= new Date().getTime() - new Date(tache.start).getTime();
       tache.duration = ecartMilli + tache.older_run_duration;
     }
+
+    this.Sauvegarde();
   }
 
   /*
@@ -278,5 +309,14 @@ export class ServiceImpl {
     tache.start = new Date();
     tache.duration = 0;
     tache.older_run_duration = 0;
+    this.Sauvegarde();
+  }
+
+  /*
+    Sauvegarde les données de taches et projects sur le stockage local
+  */
+  Sauvegarde(){
+    localStorage.setItem("tasks",JSON.stringify(this.taches));
+    localStorage.setItem("projects",JSON.stringify(this.projets));
   }
 }
