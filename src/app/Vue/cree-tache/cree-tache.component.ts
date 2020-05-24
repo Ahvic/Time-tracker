@@ -39,12 +39,9 @@ export class CreeTacheComponent implements OnInit {
 
     if(form.value.nom != ""){
       if(this.quickstart || form.value.demarrage)
-        this.services.QuickStart(form.value.nom);
+        this.services.QuickStart(form.value.nom, form.value.projet);
       else
-        this.services.CreeTache(form.value.nom);
-
-      if(form.value.projet != "null" && form.value.projet != "")
-        this.services.AssigneTacheAProjet(form.value.nom, form.value.projet);
+        this.services.CreeTache(form.value.nom, form.value.projet, false);
 
       this.router.navigate(['']);
     }

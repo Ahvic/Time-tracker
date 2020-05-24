@@ -19,6 +19,26 @@ export class ServiceImpl {
   ];
 
   /*
+    Affiche le contenu de taches et projets dans la console
+  */
+ DebugArrays(){
+   var resultat = "";
+
+   for (let i = 0; i < this.projets.length; i++) {
+     resultat += this.projets[i].name + " tâches:\n";
+     for (let j = 0; j < this.projets[i].tasks.length; j++)
+      resultat += "   " + this.projets[i].tasks[j].name + "\n";
+    resultat += "\n";
+   }
+
+   for (let i = 0; i < this.taches.length; i++) {
+     resultat += this.taches[i].name + " running: " + this.taches[i].running + "\n";
+   }
+
+   console.log(resultat);
+ }
+
+  /*
     Ajoute un projet
     Ne fait pas de duplicat
     @param : le nom du projet (String)
@@ -32,7 +52,36 @@ export class ServiceImpl {
 
     this.projets.push({name: nom, tasks: []});
     localStorage.setItem("projects",JSON.stringify(this.projets));
+
     return true;
+  }
+
+  /*
+    Trouve une tâche en fonction de son nom
+    @param : le nom a chercher (String)
+    @return : un objet Task (nullable)
+  */
+  TrouverTache(nom: String) {
+    for (let i = 0; i < this.taches.length; i++) {
+      if(this.taches[i].name == nom)
+        return this.taches[i];
+    }
+
+    return null;
+  }
+
+  /*
+    Trouve un projet qui a le nom en paramètre
+    @param : le nom a chercher (String)
+    @return : un objet Project (nullable)
+  */
+  TrouverProjet(nom: String) {
+    for (let i = 0; i < this.projets.length; i++) {
+      if(this.projets[i].name == nom)
+        return this.projets[i];
+    }
+
+    return null
   }
 
   /*
@@ -43,57 +92,82 @@ export class ServiceImpl {
   }
 
   /*
-    Ajoute une tâche à un projet
-    @param : le nom de la tâche (String), le projet associé (Project, nullable)
-  */
-  AjouterTache(nom: string, projet: Project) {
-    for (let i = 0; i < this.taches.length; i++) {
-      if(this.taches[i].name == nom){
-        projet.tasks.push(this.taches[i]);
-      }
-    }
-    localStorage.setItem("tasks",JSON.stringify(this.taches));
-    console.log("Tâche " + nom + "ajoutée");
-  }
-
-  /*
-    Crée une tâche
+    Crée une tâche et l'assigne a un projet si nécessaire
     Ne fait pas de duplicat
-    @param : le nom de la tâche (String), le projet associé (Project, nullable)
+    @param : le nom de la tâche (String), le projet associé (String, nullable), si elle demarre tout de suite (Booleen)
   */
-  CreeTache(nom: string) {
-    this.taches.push({name: nom, start: new Date(), duration: 0, older_run_duration:0, running: false});
-    localStorage.setItem("tasks",JSON.stringify(this.taches));
-    console.log("Tâche " + nom + "ajoutée");
+  CreeTache(nom: string, projet: string, demarre: boolean) {
+    //On vérifie que la tache n'est pas déjà dans la liste
+    if(this.TrouverTache(nom) == null){
+      this.taches.push({name: nom, start: new Date(), duration: 0, older_run_duration:0, running: demarre});
+      this.AssigneTacheAProjet(nom, projet);
+
+      localStorage.setItem("tasks",JSON.stringify(this.taches));
+      console.log("Tâche " + nom + " crée");
+    }
+    else{
+      console.log("la tâche " + nom + " existe déjà");
+    }
+  }
+
+  /*
+    Crée une tache en lancant directement le timer
+    @param : nom de la tache (String), le projet associé (String, nullable)
+  */
+  QuickStart(nom: string, projet: string){
+    this.CreeTache(nom, projet, true);
   }
 
   /*
     Ajoute une tâche à un projet
+    Une tache ne peut être que sur un projet à la fois
     @param : le nom de la tâche (String), le projet associé (String, nullable)
+    @return : vrai si réussi, faux sinon
   */
   AssigneTacheAProjet(nom: string, projet: string) {
     let p = this.TrouverProjet(projet);
-    for (let i = 0; i < p.tasks.length; i++) {
-      if(p.tasks[i].name == nom){
-        console.log("déjà dans projet");
-        return false;
-      }
-    }
     let n = this.TrouverTache(nom);
-    p.tasks.push(n);
-    console.log(nom + " assigné à " + projet);
+
+    if(p != null && n != null){
+
+      //On enlève la tache si ele est déjà dans un projet
+      for (let i = 0; i < this.projets.length; i++) {
+        for(let j = 0; j < this.projets[i].tasks.length; j++){
+          if(this.projets[i].tasks[j].name == nom)
+            this.projets[i].tasks.splice(j, 1);
+        }
+      }
+
+      //On vérifie que la tache n'est pas déjà dans le projet
+      for (let i = 0; i < p.tasks.length; i++) {
+        if(p.tasks[i].name == nom){
+          console.log(nom + " déjà dans projet " + p.name);
+          return false;
+        }
+      }
+
+      p.tasks.push(n);
+      localStorage.setItem("projects",JSON.stringify(this.projets));
+      console.log(nom + " assigné à " + projet);
+      return true;
+    }
+
+    return false;
   }
 
   /*
     Supprime une tâche
     @param : le nom de la tâche (String)
   */
-  RemoveTache(nom: string) {
+  SupprimeTache(nom: string) {
+    //On retire la tache de taches
     for (let i = 0; i < this.taches.length; i++) {
       if(this.taches[i].name == nom){
         delete this.taches[i];
       }
     }
+
+    //On l'enlève de son projet si elle en a une
     for (let i = 0; i < this.projets.length; i++) {
       for (let j = 0; j < this.projets[i].tasks.length; j++) {
         if(this.projets[i].tasks[j].name == nom){
@@ -101,35 +175,10 @@ export class ServiceImpl {
         }
       }
     }
+
     localStorage.setItem("tasks",JSON.stringify(this.taches));
     localStorage.setItem("projects",JSON.stringify(this.projets));
-    console.log("Tâche " + nom + "ajoutée");
-  }
-
-  /*
-    Trouve une tâche en fonction de son nom
-    @param : le nom a chercher (String)
-    @return : un objet Task (nullable)
-  */
-  TrouverTache(nom: String) {
-    for (let i = 0; i < this.taches.length; i++) {
-      if(this.taches[i].name == nom){
-        return this.taches[i];
-      }
-    }
-  }
-
-  /*
-    Trouve un projet qui a le nom en paramètre
-    @param : le nom a chercher (String)
-    @return : un objet Project (nullable)
-  */
-  TrouverProjet(nom: String) {
-    for (let i = 0; i < this.projets.length; i++) {
-      if(this.projets[i].name == nom){
-        return this.projets[i];
-      }
-    }
+    console.log("Tâche " + nom + " supprimée");
   }
 
   /*
@@ -141,7 +190,7 @@ export class ServiceImpl {
   }
 
   /*
-    Inverse la valeur running de la tâche spécifiée
+    Inverse la valeur running de la tâche spécifiée et fait des opérations liées au chrono
     @param : le nom de la tache (String)
   */
   AllumeEteintTache(nom: String){
@@ -190,14 +239,6 @@ export class ServiceImpl {
   */
   GetAllTachesRunning(){
     return this.taches;
-  }
-
-  /*
-    Crée une tache en lancant directement le timer
-    @param : nom de la tache (String)
-  */
-  QuickStart(nom: String){
-    console.log("QuickStart " + nom + " crée");
   }
 
   /*

@@ -18,7 +18,7 @@
     </div>
 
     <div class="col-sm-1">
-      <!-- On enlève une heure ( 60 * 60 * 1000 ms) au compteur à cause des ricains qui commencent leur journée à 1h du mat -->
+      <!-- On enlève une heure ( 60 * 60 * 1000 ms) au compteur à cause des ricains qui commencent à compter depuis le 1e janvier 1970 à 1h du mat -->
       <p>{{ tache.duration - (60 * 60 * 1000) | date: 'H:mm:ss' }}</p>
     </div>
 

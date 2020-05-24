@@ -19,8 +19,6 @@ export class ProjetDetailComponent implements OnInit {
   ngOnInit(): void {
     var nomProjet = this.route.snapshot.paramMap.get('nom');
     this.projet = this.services.TrouverProjet(nomProjet);
-
-    console.log("nb de tache: " + this.projet.tasks.length);
   }
 
   onNouvelleTache(){
