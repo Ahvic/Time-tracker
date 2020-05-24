@@ -246,15 +246,11 @@ export class ServiceImpl {
     @return : l'array concerné (Task[])
   */
   GetAllTachesRunning(){
-    var resultat = Task.assign([], this.taches);
+    var resultat = [];
 
-    this.DebugArrays();
-
-    for (let i = 0; i < resultat.length; i++){
-      console.log(resultat[i].name + " " + resultat[i].running);
-
-      if(!resultat[i].running)
-        resultat.splice(i, 1);
+    for (let i = 0; i < this.taches.length; i++){
+      if(this.taches[i].running)
+        resultat.push(this.taches[i]);
     }
 
     return resultat;
