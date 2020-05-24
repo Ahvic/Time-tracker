@@ -15,7 +15,6 @@ export class ModifierTacheComponent implements OnInit {
 
   projets: Project[];
   ancienNom: string;
-  resetTimer: boolean;
   tache: Task;
 
   constructor(private services: ServiceImpl,
@@ -34,16 +33,15 @@ export class ModifierTacheComponent implements OnInit {
     console.log(form.value);
 
     if(form.value.nom != ""){
-      this.services.ModifierTache(this.ancienNom, form.value.nom, this.resetTimer, form.value.projet);
+      this.services.ModifierTache(this.ancienNom, form.value.nom, form.value.projet);
     }
     else
-      this.services.ModifierTache(this.ancienNom, this.ancienNom, this.resetTimer, form.value.projet);
+      this.services.ModifierTache(this.ancienNom, this.ancienNom, form.value.projet);
 
     this.router.navigate(['']);
   }
 
   onResetDuration(){
-    this.resetTimer = true;
-    this.tache.duration = 0;
+    this.services.ResetDurationTache(this.tache.name);
   }
 }

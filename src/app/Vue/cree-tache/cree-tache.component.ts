@@ -35,7 +35,6 @@ export class CreeTacheComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
-    console.log(form.value);
 
     if(form.value.nom != ""){
       if(this.quickstart || form.value.demarrage)

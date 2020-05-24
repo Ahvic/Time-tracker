@@ -14,7 +14,7 @@
 
   <div>
     <label for="durée">Durée de la tâche</label>
-    <p>{{ tache.duration | date: 'HH:mm:ss' }}</p>
+    <p>{{ tache.duration - (60 * 60 * 1000) | date: 'H:mm:ss' }}</p>
 
     <button class="btn btn-secondary" type="button" (click)="onResetDuration()">Reset la durée</button>
   </div>

@@ -32,7 +32,7 @@ export class ServiceImpl {
    }
 
    for (let i = 0; i < this.taches.length; i++) {
-     resultat += this.taches[i].name + " running: " + this.taches[i].running + "\n";
+     resultat += this.taches[i].name + " running: " + this.taches[i].running + " durée: " + this.taches[i].duration + " old duration: " + this.taches[i].older_run_duration + "\n";
    }
 
    console.log(resultat);
@@ -121,7 +121,7 @@ export class ServiceImpl {
   /*
     Ajoute une tâche à un projet
     Une tache ne peut être que sur un projet à la fois
-    @param : le nom de la tâche (String), le projet associé (String, nullable)
+    @param : le nom de la tâche (String), le projet auquel l'associé (String)
     @return : vrai si réussi, faux sinon
   */
   AssigneTacheAProjet(nom: string, projet: string) {
@@ -208,37 +208,56 @@ export class ServiceImpl {
   }
 
   /*
-    Change une tache et les projets auquels elle est associée
-    Permet aussi de créer une tache
-    @param : l'ancien nom (String), le nouveau (String), durée reset ? (Boolean), nouveau projet associé (String, pe vide)
+    Modofie une tache et le projet auquel elle est associée
+    @param : l'ancien nom (String), le nouveau (String), nouveau projet associé (String, pe vide)
   */
-  ModifierTache(nomOriginal: string, nouvNom: string, durationReset: boolean, projet: string){
-    console.log("original: " + nomOriginal + " nouvNom: " + nouvNom + " reset: " + durationReset + " projet: " + projet)
+  ModifierTache(nomOriginal: string, nouvNom: string, projet: string){
+    this.DebugArrays();
+
+    let tache = this.TrouverTache(nomOriginal);
+    tache.name = nouvNom;
+    this.AssigneTacheAProjet(nouvNom, projet);
+
+    this.DebugArrays();
   }
 
   /*
     Retourne toutes les tâches qui ne sont dans aucun projet
+    @return : l'array concerné (Task[])
   */
   GetAllTachesSolitaires(){
-    let maliste = this.taches;
-    for (let n = 0; n < this.taches.length; n++) {
-      for (let i = 0; i < this.projets.length; i++) {
-        for (let j = 0; j < this.projets[i].tasks.length; j++) {
-          if(this.taches[n] == this.projets[i].tasks[j]){
-            delete maliste[n];
-          }
+    var resultat = this.taches.slice();
+
+    //On regarde pour chaque projet si la tache apparait
+    for (let i = 0; i < this.projets.length; i++) {
+      for (let j = 0; j < this.projets[i].tasks.length; j++) {
+        for (let k = 0; k < resultat.length; k++){
+          if(this.projets[i].tasks[j].name == resultat[k].name)
+            resultat.splice(k, 1);
         }
       }
     }
-    return maliste;
+
+    return resultat;
   }
 
   /*
     Retourne toutes les tâches qui sont actives
-    @return : un array de Task
+    @return : l'array concerné (Task[])
   */
   GetAllTachesRunning(){
-    return this.taches;
+    var resultat = Task.assign([], this.taches);
+
+    this.DebugArrays();
+
+    for (let i = 0; i < resultat.length; i++){
+      console.log(resultat[i].name + " " + resultat[i].running);
+
+      if(!resultat[i].running)
+        resultat.splice(i, 1);
+    }
+
+    return resultat;
   }
 
   /*
@@ -252,5 +271,16 @@ export class ServiceImpl {
       var ecartMilli= new Date().getTime() - tache.start.getTime();
       tache.duration = ecartMilli + tache.older_run_duration;
     }
+  }
+
+  /*
+    Remet à zéro le timer d'une tache
+    @param : nom de la tache concernée (String)
+  */
+  ResetDurationTache(nom: String){
+    var tache: Task = this.TrouverTache(nom);
+    tache.start = new Date();
+    tache.duration = 0;
+    tache.older_run_duration = 0;
   }
 }
