@@ -1,6 +1,6 @@
 import { Task } from "./Task";
 
-export class Project{
+export interface Project{
   name:string;
   tasks:Task[];
 }

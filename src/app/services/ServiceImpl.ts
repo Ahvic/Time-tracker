@@ -1,46 +1,49 @@
+import { Injectable } from '@angular/core';
 import { Task } from "../Modele/Task";
 import { Project } from "../Modele/Project"
+
 
 export class ServiceImpl {
 
   taches: Task[] = [
+    {name: 'Aller en egypte', start: new Date(), duration: 0, older_run_duration:0, running: true},
+    {name: 'Louer un sous-marin', start: new Date(), duration: 0, older_run_duration:0, running: true},
+    {name: 'Pécho une L1 japonaise', start: new Date(), duration: 0, older_run_duration:0, running: false},
+    {name: 'Mettre sa cigarette dans le bon sens', start: new Date(), duration: 0, older_run_duration:0, running: false}
   ];
 
   projets: Project[] = [
+    {name: 'Abattre DIO', tasks: [this.taches[0], this.taches[1]]},
+    {name: 'Faire Josuke', tasks: [this.taches[2]]},
+    {name: 'Manger une salade césar', tasks: [this.taches[3]]}
   ];
-
-
 
   /*
     Ajoute un projet
     Ne fait pas de duplicat
     @param : le nom du projet (String)
+    @return : fait ou non (Boolean)
   */
   CreerProjet(nom: string) {
+    for (let i = 0; i < this.projets.length; i++) {
+      if(this.projets[i].name == nom)
+        return false;
+    }
+
     this.projets.push({name: nom, tasks: []});
     localStorage.setItem("projects",JSON.stringify(this.projets));
-    console.log("Projet " + nom + " crée");
+    return true;
   }
 
   /*
     Charge les données locales
   */
   Load() {
-    this.projets = JSON.parse(localStorage.getItem("projects"));
-    this.taches = JSON.parse(localStorage.getItem("tasks"));
 
-    //Premier lancement
-    if(this.projets == null)
-      this.projets = [];
-
-    if(this.taches == null)
-      this.taches = [];
-
-    console.log("Changement local terminé");
   }
 
   /*
-    Ajoute une tâche
+    Ajoute une tâche à un projet
     @param : le nom de la tâche (String), le projet associé (Project, nullable)
   */
   AjouterTache(nom: string, projet: Project) {
@@ -59,7 +62,7 @@ export class ServiceImpl {
     @param : le nom de la tâche (String), le projet associé (Project, nullable)
   */
   CreeTache(nom: string) {
-    this.taches.push({name: nom, start: new Date(), duration: new Date(), running: false});
+    this.taches.push({name: nom, start: new Date(), duration: 0, older_run_duration:0, running: false});
     localStorage.setItem("tasks",JSON.stringify(this.taches));
     console.log("Tâche " + nom + "ajoutée");
   }
@@ -146,8 +149,10 @@ export class ServiceImpl {
       if(this.taches[i].name == nom){
         if(this.taches[i].running == false){
           this.taches[i].running = true;
+          this.taches[i].start = new Date();
         }else{
           this.taches[i].running = false;
+          this.taches[i].older_run_duration = this.taches[i].duration;
         }
       }
     }
@@ -165,9 +170,7 @@ export class ServiceImpl {
   /*
     Retourne toutes les tâches qui ne sont dans aucun projet
   */
-
   GetAllTachesSolitaires(){
-    return this.taches;
     let maliste = this.taches;
     for (let n = 0; n < this.taches.length; n++) {
       for (let i = 0; i < this.projets.length; i++) {
@@ -191,10 +194,22 @@ export class ServiceImpl {
 
   /*
     Crée une tache en lancant directement le timer
-    @param : nom de la tache
+    @param : nom de la tache (String)
   */
   QuickStart(nom: String){
     console.log("QuickStart " + nom + " crée");
   }
 
+  /*
+    Met à jour le timer d'une tache
+    @param : nom de la tache concernée (String)
+  */
+  MajTimer(nom: String){
+    var tache: Task = this.TrouverTache(nom);
+
+    if(tache.running){
+      var ecartMilli= new Date().getTime() - tache.start.getTime();
+      tache.duration = ecartMilli + tache.older_run_duration;
+    }
+  }
 }

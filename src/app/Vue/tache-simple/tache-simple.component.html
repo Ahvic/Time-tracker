@@ -18,7 +18,8 @@
     </div>
 
     <div class="col-sm-1">
-      <p>{{ tache.duration | date: 'hh:mm:ss' }}</p>
+      <!-- On enlève une heure ( 60 * 60 * 1000 ms) au compteur à cause des ricains qui commencent leur journée à 1h du mat -->
+      <p>{{ tache.duration - (60 * 60 * 1000) | date: 'H:mm:ss' }}</p>
     </div>
 
     <div class="col-sm-1">

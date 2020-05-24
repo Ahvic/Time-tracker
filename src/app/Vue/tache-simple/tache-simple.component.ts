@@ -18,7 +18,9 @@ export class TacheSimpleComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-
+    setInterval(() => {
+      this.services.MajTimer(this.tache.name);
+    }, 1000);
   }
 
   onAllumerEtendre(){

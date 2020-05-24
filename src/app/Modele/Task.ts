@@ -1,7 +1,8 @@
 
-export class Task{
+export interface Task{
   name:string;
   start:Date;
-  duration:Date;
+  duration:number;
+  older_run_duration:number;
   running:boolean;
 }

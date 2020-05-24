@@ -44,7 +44,6 @@ export class ModifierTacheComponent implements OnInit {
 
   onResetDuration(){
     this.resetTimer = true;
-    this.tache.duration = new Date();
-    this.tache.duration.setHours(0, 0, 1, 0);
+    this.tache.duration = 0;
   }
 }

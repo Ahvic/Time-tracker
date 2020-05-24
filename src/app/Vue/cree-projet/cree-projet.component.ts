@@ -18,9 +18,10 @@ export class CreeProjetComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    this.services.CreerProjet(form.value.name);
-
-    //On renvoi l'utilisateur sur le menu principal
-    this.router.navigate([''])
+    if(this.services.CreerProjet(form.value.name))
+      //On renvoi l'utilisateur sur le menu principal
+      this.router.navigate([''])
+    else
+      alert("Un projet du même nom existe déjà.");
   }
 }
