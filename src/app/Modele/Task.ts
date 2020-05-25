@@ -1,5 +1,5 @@
 
-export interface Task{
+export class Task{
   name:string;
   start:Date;
   duration:number;

@@ -30,7 +30,6 @@ export class ModifierTacheComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
-    console.log(form.value);
 
     if(form.value.nom != ""){
       this.services.ModifierTache(this.ancienNom, form.value.nom, form.value.projet);
