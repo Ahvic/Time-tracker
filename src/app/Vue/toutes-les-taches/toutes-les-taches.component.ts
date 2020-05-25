@@ -18,6 +18,12 @@ export class ToutesLesTachesComponent implements OnInit {
   ngOnInit(): void {
     this.Projets = this.services.GetProjets();
     this.TasksSolitaires = this.services.GetAllTachesSolitaires();
+
+    if(this.TasksSolitaires.length > 0)
+      $('#tachesSolitairesVide').hide();
+
+    if(this.Projets.length > 0)
+      $('#listeProjetVide').hide();
   }
 
 }

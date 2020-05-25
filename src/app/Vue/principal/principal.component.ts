@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceImpl } from '../../Services/serviceImpl';
 import { Project } from "../../Modele/Project"
 import { Task } from "../../Modele/Task";
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-principal',
@@ -21,6 +22,12 @@ export class PrincipalComponent implements OnInit {
     this.services.Load();
     this.projets = this.services.GetProjets();
     this.tasksRunning = this.services.GetAllTachesRunning();
+
+    if(this.tasksRunning.length > 0)
+      $('#tacheEnCoursVide').hide();
+
+    if(this.projets.length > 0)
+      $('#listeProjetVide').hide();
   }
 
   onSelect(projet: Project){

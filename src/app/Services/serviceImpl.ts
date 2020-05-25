@@ -82,7 +82,7 @@ export class ServiceImpl {
   */
   Load() {
 
-    //localStorage.clear();
+    localStorage.clear();
 
     if(!this.initialize){
       var projets_lu = JSON.parse(localStorage.getItem("projects"));

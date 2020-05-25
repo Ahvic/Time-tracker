@@ -15,6 +15,9 @@ export class TachesSolitairesComponent implements OnInit {
 
   ngOnInit(): void {
     this.TasksSolitaires = this.services.GetAllTachesSolitaires();
+
+    if(this.TasksSolitaires.length > 0)
+      $('#tachesSolitairesVide').hide();
   }
 
 }
