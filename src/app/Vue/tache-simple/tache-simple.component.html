@@ -13,11 +13,11 @@
               (click)="onAllumerEtendre()">Arrêter</button>
     </div>
 
-    <div class="col-sm-8">
+    <div class="col-sm-5">
       <p>{{ tache.name }}</p>
     </div>
 
-    <div class="col-sm-1">
+    <div class="col-sm-2">
       <!-- On enlève une heure ( 60 * 60 * 1000 ms) au compteur à cause des ricains qui commencent à compter depuis le 1e janvier 1970 à 1h du mat -->
       <p>{{ tache.duration - (60 * 60 * 1000) | date: 'H:mm:ss' }}</p>
     </div>
@@ -25,6 +25,11 @@
     <div class="col-sm-1">
       <button class="btn btn-primary"
               (click)="onModify()">Modifier</button>
+    </div>
+
+    <div class="col-sm-2">
+      <button class="btn btn-danger"
+              (click)="onDelete()">Supprimer</button>
     </div>
   </div>
 </a>

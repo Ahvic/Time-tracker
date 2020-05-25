@@ -65,7 +65,7 @@ export class ServiceImpl {
   */
   Load() {
 
-    localStorage.clear();
+    //localStorage.clear();
 
     if(!this.initialize){
       var projets_lu = JSON.parse(localStorage.getItem("projects"));
@@ -200,7 +200,7 @@ export class ServiceImpl {
     //On retire la tache de taches
     for (let i = 0; i < this.taches.length; i++) {
       if(this.taches[i].name == nom){
-        delete this.taches[i];
+        this.taches.splice(i, 1);
       }
     }
 
@@ -208,13 +208,31 @@ export class ServiceImpl {
     for (let i = 0; i < this.projets.length; i++) {
       for (let j = 0; j < this.projets[i].tasks.length; j++) {
         if(this.projets[i].tasks[j].name == nom){
-          delete this.projets[i].tasks[j];
+          this.projets[i].tasks.splice(j, 1);
         }
       }
     }
 
     this.Sauvegarde();
     console.log("Tâche " + nom + " supprimée");
+  }
+
+  /*
+    Supprime un projet
+    @param : le nom du projet (String)
+  */
+  SupprimerProjet(nom: string){
+    this.DebugArrays();
+
+    for (let i = 0; i < this.projets.length; i++) {
+      if(this.projets[i].name == nom){
+        this.projets.splice(i, 1);
+      }
+    }
+
+    this.DebugArrays();
+    this.Sauvegarde();
+    console.log("Projet " + name + " supprimé");
   }
 
   /*

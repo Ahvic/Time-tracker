@@ -31,4 +31,11 @@ export class TacheSimpleComponent implements OnInit {
     //Ouvre la page pour modifier une tâche
     this.router.navigate(['modifierTache/', this.tache.name]);
   }
+
+  onDelete(){
+    if(confirm("Voulez vous vraiment détruire la tâche " + this.tache.name + " ?")){
+      this.services.SupprimeTache(this.tache.name);
+      location.reload();
+    }
+  }
 }

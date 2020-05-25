@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceImpl } from '../../Services/serviceImpl';
 import { Task } from "../../Modele/Task";
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-taches-solitaires',

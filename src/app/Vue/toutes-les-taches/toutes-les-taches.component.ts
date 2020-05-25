@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceImpl } from '../../Services/serviceImpl';
 import { Project } from "../../Modele/Project"
 import { Task } from "../../Modele/Task";
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-toutes-les-taches',
