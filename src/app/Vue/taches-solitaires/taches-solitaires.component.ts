@@ -14,6 +14,7 @@ export class TachesSolitairesComponent implements OnInit {
   constructor(private services: ServiceImpl) { }
 
   ngOnInit(): void {
+    this.services.Load();
     this.TasksSolitaires = this.services.GetAllTachesSolitaires();
   }
 

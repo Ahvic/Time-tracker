@@ -23,6 +23,7 @@ export class CreeTacheComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.services.Load();
     this.projets = this.services.GetProjets();
     this.quickstart = (this.route.snapshot.paramMap.get("quickstart") == "true");
 
