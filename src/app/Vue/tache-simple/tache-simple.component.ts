@@ -18,9 +18,6 @@ export class TacheSimpleComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-
-    console.log("tâche: " + this.tache.name + " date: " + this.tache.start + " duration: " + this.tache.duration + " older: " + this.tache.older_run_duration + " running: " + this.tache.running);
-
     setInterval(() => {
       this.services.MajTimer(this.tache.name);
     }, 1000);

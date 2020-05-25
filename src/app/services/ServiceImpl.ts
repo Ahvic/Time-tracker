@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Task } from "../Modele/Task";
 import { Project } from "../Modele/Project"
+import { ProjectDTO } from "../Modele/ProjectDTO"
 
 
 export class ServiceImpl {
@@ -14,7 +15,7 @@ export class ServiceImpl {
   /*
     Affiche le contenu de taches et projets dans la console
   */
- DebugArrays(){
+  DebugArrays(){
    var resultat = "";
 
    for (let i = 0; i < this.projets.length; i++) {
@@ -95,25 +96,20 @@ export class ServiceImpl {
       if(taches_lu == null)
         taches_lu = [];
 
-      console.log("taille projets_lu: " + projets_lu.length + " taille taches_lu: " + taches_lu.length);
-
-      var resultat = "";
-
-      for (let i = 0; i < projets_lu.length; i++) {
-        resultat += projets_lu[i].name + " tâches:\n";
-        for (let j = 0; j < projets_lu[i].tasks.length; j++)
-         resultat += "   " + projets_lu[i].tasks[j].name + "\n";
-       resultat += "\n";
-      }
-
-      for (let i = 0; i < taches_lu.length; i++) {
-        resultat += taches_lu[i].name + " running: " + taches_lu[i].running + " durée: " + taches_lu[i].duration + " old duration: " + taches_lu[i].older_run_duration + "\n";
-      }
-
-      this.projets = projets_lu;
       this.taches = taches_lu;
+      this.projets = [];
 
-      console.log(resultat);
+      //Reconvertie les ProjectDTO en project
+      for (let i = 0; i < projets_lu.length; i++){
+        var projet: Project = {name: projets_lu[i].name, tasks: []};
+
+        //On convertie les indexes en tache
+        for (let j = 0; j < projets_lu[i].index_tasks.length; j++)
+          projet.tasks.push(this.taches[projets_lu[i].index_tasks[j]]);
+
+        this.projets.push(projet);
+      }
+
       console.log("Changement des données locales terminé");
     }
   }
@@ -154,6 +150,20 @@ export class ServiceImpl {
   AssigneTacheAProjet(nom: string, projet: string) {
     let p = this.TrouverProjet(projet);
     let n = this.TrouverTache(nom);
+
+    console.log("Assignation: " + projet);
+
+    if(projet == "null"){
+      //On enlève la tache du projet ou elle est
+      for (let i = 0; i < this.projets.length; i++) {
+        for(let j = 0; j < this.projets[i].tasks.length; j++){
+          if(this.projets[i].tasks[j].name == nom)
+            this.projets[i].tasks.splice(j, 1);
+        }
+      }
+
+      return true;
+    }
 
     if(p != null && n != null){
 
@@ -317,6 +327,25 @@ export class ServiceImpl {
   */
   Sauvegarde(){
     localStorage.setItem("tasks",JSON.stringify(this.taches));
-    localStorage.setItem("projects",JSON.stringify(this.projets));
+
+    //conversion projets vers projetsDTO
+    var projetsDTO: ProjectDTO[] = [];
+
+    for (let i = 0; i < this.projets.length; i++) {
+        var projetDTO: ProjectDTO = {name: this.projets[i].name, index_tasks: []};
+
+        //On convertie les tâches en index stockable
+        for(let j = 0; j < this.projets[i].tasks.length; j++){
+          for(let k = 0; k < this.taches.length; k++){
+            if(this.projets[i].tasks[j].name == this.taches[k].name)
+              projetDTO.index_tasks.push(k);
+          }
+        }
+
+        projetsDTO.push(projetDTO);
+    }
+
+    //console.log(JSON.stringify(projetsDTO));
+    localStorage.setItem("projects",JSON.stringify(projetsDTO));
   }
 }
