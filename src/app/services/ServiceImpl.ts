@@ -96,25 +96,19 @@ export class ServiceImpl {
       if(taches_lu == null)
         taches_lu = [];
 
-      //console.log("projets lus: \n" + projets_lu);
-      //console.log("taches lus: \n" + taches_lu);
-
       this.taches = taches_lu;
-      this.projets = projets_lu;
+      this.projets = [];
 
+      //Reconvertie les ProjectDTO en project
+      for (let i = 0; i < projets_lu.length; i++){
+        var projet: Project = {name: projets_lu[i].name, tasks: []};
 
-      this.taches = [
-        {name: 'Aller en egypte', start: new Date(), duration: 0, older_run_duration:0, running: true},
-        {name: 'Louer un sous-marin', start: new Date(), duration: 0, older_run_duration:0, running: true},
-        {name: 'Pécho une L1 japonaise', start: new Date(), duration: 0, older_run_duration:0, running: false},
-        {name: 'Mettre sa cigarette dans le bon sens', start: new Date(), duration: 0, older_run_duration:0, running: false}
-      ];
+        //On convertie les indexes en tache
+        for (let j = 0; j < projets_lu[i].index_tasks.length; j++)
+          projet.tasks.push(this.taches[projets_lu[i].index_tasks[j]]);
 
-      this.projets = [
-        {name: 'Abattre DIO', tasks: [this.taches[0], this.taches[1]]},
-        {name: 'Faire Josuke', tasks: [this.taches[2]]},
-        {name: 'Manger une salade césar', tasks: [this.taches[3]]}
-      ];
+        this.projets.push(projet);
+      }
 
       console.log("Changement des données locales terminé");
     }
@@ -194,8 +188,6 @@ export class ServiceImpl {
       console.log(nom + " assigné à " + projet);
       return true;
     }
-
-    DebugArrays();
 
     return false;
   }
@@ -334,7 +326,6 @@ export class ServiceImpl {
     Sauvegarde les données de taches et projects sur le stockage local
   */
   Sauvegarde(){
-    /*
     localStorage.setItem("tasks",JSON.stringify(this.taches));
 
     //conversion projets vers projetsDTO
@@ -354,8 +345,7 @@ export class ServiceImpl {
         projetsDTO.push(projetDTO);
     }
 
-    console.log(JSON.stringify(projetsDTO));
+    //console.log(JSON.stringify(projetsDTO));
     localStorage.setItem("projects",JSON.stringify(projetsDTO));
-    */
   }
 }
