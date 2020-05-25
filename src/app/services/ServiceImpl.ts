@@ -14,7 +14,7 @@ export class ServiceImpl {
   /*
     Affiche le contenu de taches et projets dans la console
   */
- DebugArrays(){
+  DebugArrays(){
    var resultat = "";
 
    for (let i = 0; i < this.projets.length; i++) {
@@ -30,24 +30,6 @@ export class ServiceImpl {
 
    console.log(resultat);
  }
-
-  /*
-    Ajoute un projet
-    Ne fait pas de duplicat
-    @param : le nom du projet (String)
-    @return : fait ou non (Boolean)
-  */
-  CreerProjet(nom: string) {
-    for (let i = 0; i < this.projets.length; i++) {
-      if(this.projets[i].name == nom)
-        return false;
-    }
-
-    this.projets.push({name: nom, tasks: []});
-    this.Sauvegarde();
-
-    return true;
-  }
 
   /*
     Trouve une tâche en fonction de son nom
@@ -116,6 +98,24 @@ export class ServiceImpl {
       console.log(resultat);
       console.log("Changement des données locales terminé");
     }
+  }
+
+  /*
+    Ajoute un projet
+    Ne fait pas de duplicat
+    @param : le nom du projet (String)
+    @return : fait ou non (Boolean)
+  */
+  CreerProjet(nom: string) {
+    for (let i = 0; i < this.projets.length; i++) {
+      if(this.projets[i].name == nom)
+        return false;
+    }
+
+    this.projets.push({name: nom, tasks: []});
+    this.Sauvegarde();
+
+    return true;
   }
 
   /*
